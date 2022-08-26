@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# This script reconfigures a pdf to print custom signatures
+# This script reconfigures a pdf to print custom signatures.
+# When calling the script, provide the path and filename of the pdf to be processed.
 
-echo 'pdf file name (exlude extension):'
-
-read input
+echo $1
 
 echo total number of pages:
 
@@ -13,8 +12,6 @@ read pagecount
 echo pages per signature:
 
 read sigsize
-
-temp=0
 
 # Handle edge case where sigature size is greater than page count
 
@@ -47,19 +44,26 @@ read response
     fi
 fi
 
-           
+# setup working folder
+
+mkdir pager-workspace-temp
+
+# Create blank pages
+
+temp=0
+blankpages=()
+
 while [ $((pagecount%sigsize)) != 0 ]
 do 
 temp=$((temp+1))
 echo remainder is $((pagecount%sigsize))
-convert xc:none -page Letter temp$temp.pdf
+convert xc:none -page Letter ./pager-workspace-temp/temp$temp.pdf
+blankpages+=(./pager-workspace-temp/temp$temp.pdf)
 echo temp$temp.pdf created
-pdfunite $input.pdf temp$temp.pdf $input-$temp.pdf
-mv $input-$temp.pdf $input.pdf
-echo $input-$temp.pdf created
 pagecount=$((pagecount+1))
 done
-mv $input.pdf $input-appended.pdf
- 
+
+pdfunite $1 ${blankpages[@]} ~/Downloads/appended.pdf
+
 echo $pagecount
 
