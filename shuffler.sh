@@ -75,11 +75,19 @@ do
 
 done
 
+echo get the name of the input
+file=$(basename $1)
+
+echo copy the inputs to the working folder
+mkdir shuffler-workspace-temp
+cp $1 ./shuffler-workspace-temp
+
 echo Split PDF into individual pages
-pdfseparate $1 ./shuffler-workspace-temp/page-%d.pdf
+cd shuffler-workspace-temp
+pdfseparate $file page-%d.pdf
 
 echo Recombine pages in new order
 pdfunite ${array[@]} finished.pdf
- 
+  
 # Cleanup
-rm ./shuffler-workspace-temp/${array[@]}
+rm ${array[@]}
