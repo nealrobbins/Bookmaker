@@ -63,7 +63,14 @@ echo temp$temp.pdf created
 pagecount=$((pagecount+1))
 done
 
+# Merge blank bages with input pdf
+
 pdfunite $1 ${blankpages[@]} ~/Downloads/appended.pdf
 
 echo $pagecount
+echo Check your downloads folder for appended.pdf
+
+#clean up
+
+rm ./pager-workspace-temp/temp*.pdf
 
