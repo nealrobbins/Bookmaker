@@ -74,3 +74,9 @@ echo Check your downloads folder for appended.pdf
 
 rm ./pager-workspace-temp/temp*.pdf
 
+# call shuffler
+
+numbersigs=$(($pagecount/$sigsize))
+
+bash ./shuffler.sh ~/Downloads/appended.pdf $pagecount $sigsize $numbersigs
+

@@ -1,16 +1,9 @@
 #!/bin/bash
 
-echo Pages per signature:
-
-read sigsize
-
-echo Total sigs:
-
-read booksize
-
-echo Total pages:
-
-read docsize
+# declare variables from inputs
+docsize=$2
+sigsize=$3
+booksize=$4
 
 if [ $((docsize%sigsize)) != 0 ]
 then
