@@ -15,33 +15,11 @@ read sigsize
 
 # Handle edge case where sigature size is greater than page count
 
-if [ $((pagecount < sigsize)) ]
+if [ $((pagecount%sigsize)) != 0 ]
 then
 
-echo 'Warning: your page count is less than your desired signature size. Blank pages will be appended to your document to make a full signature.
+echo 'Warning: your page count is not a multiple of your desired signature size. Blank pages will be appended to your document to make a full signature.'
 
-Do you wish to contine? [y/n]'
-
-read response
-    if [ $response != y ]
-    then
-        exit
-    fi
-
-# Handle edge case where page count is not a multipe of signature size
-
-elif [ $((pagecount%sigsize)) != 0 ]
-then
-    
-echo 'Your page count is not a multiple of your desired signature size. Blank pages will be appended to your document to make a full signature.
-    
-Do you want to continue? [y/n]'
-
-read response
-    if [ $response != y ]
-    then
-        exit
-    fi
 fi
 
 # setup working folder
